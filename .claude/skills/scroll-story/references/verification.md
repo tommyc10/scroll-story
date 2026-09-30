@@ -13,6 +13,12 @@ cp <skill>/scripts/*.mjs .
 Keep the Playwright scratch folder outside both repos, as above, so neither the skill nor the
 target gets extra dependencies. Run `npm run build` in the target repo.
 
+**If Playwright can't run, don't loop.** On locked-down machines (devpods, CI images, no
+internet) the Chromium download or launch can fail. Try once; on Linux, a launch error about
+missing libraries needs `npx playwright install --with-deps chromium`, which needs sudo. If
+that isn't possible, skip sections 1–5, still run section 6, and tell the user which checks
+were skipped so they can scroll the story themselves.
+
 They rely on `window.__film` (set by `Film.tsx` in dev). Start or reuse the target project's
 dev server using its existing scripts and configuration. Set `STORY_URL` to the actual URL
 printed by that server, including any app path or direction query. Both scripts accept

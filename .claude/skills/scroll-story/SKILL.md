@@ -110,6 +110,20 @@ keep the target's server configuration rather than copying the reference's port.
 standalone project, let the framework select its default available port. Read the actual URL
 from the server output and use that URL for previews and verification; do not assume a port.
 
+**Don't get stuck on the server.** Many users run on remote machines (devpods, Codespaces,
+SSH) where only some ports are exposed:
+
+- Start the dev server as a **background** process with its output going to a log file, then
+  read the URL from the log. A dev server never exits; never wait on it in the foreground.
+- Never pass `--port` or `--strictPort`, never hardcode a port in config, and never kill
+  another process to free one. If the default is taken, let the framework pick the next.
+- Your own checks run on the same machine, so `localhost` works for them even when the port
+  isn't exposed. If the *user* can't open the URL, don't restart on other ports. Tell them the
+  URL and to forward that port (the VS Code **Ports** panel, or their devpod's port settings),
+  or offer `npm run build && npm run preview` for a static check.
+- If the same step fails twice for the same reason (install, server start, browser download),
+  stop retrying. Report the error, carry on with what doesn't need it, and say what was skipped.
+
 The starter is a working mini story with the whole engine already in it:
 
 | File | What it gives you |
@@ -159,7 +173,10 @@ step and say so. Don't invent a character or add an avatar library unless asked.
   readable chapter text in `shared/Board.tsx`.
 - Verify with the scripts (`references/verification.md`): screenshots at settled and
   mid-transition times, a rewind pass, the reload check, the phone/reduced-motion pass,
-  `npm run build`. Look at the screenshots; don't just check that they exist.
+  `npm run build`. Look at the screenshots; don't just check that they exist. The scripts need
+  Playwright's Chromium; if it can't be installed or launched (no internet, missing system
+  libraries), skip them after one failed attempt, run `npm run build`, and ask the user to
+  scroll through the story themselves.
 - Before handing off, check that nothing was written into `SKILL_DIR`:
   `git -C "$SKILL_DIR" status --short -- .` should list no files you created or changed.
 - Write a README in the story folder in `TARGET` (chapters table, file map, how to change copy and pacing). For a team, offer
