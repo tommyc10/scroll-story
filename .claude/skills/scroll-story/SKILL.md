@@ -41,7 +41,7 @@ Resolve both repos before step 1. The user's own words always win.
 
 **`STORY_REPO`**, in this order:
 
-1. A path or repo the user names as the destination (`... save it in ../km-stories`,
+1. A path or repo the user names as the destination (`... save it in ../my-stories`,
    `... put the story in ../demos/acme`). If they name an exact folder, build there and don't
    add `stories/<product-name>/`.
 2. A folder open in the session that is clearly meant for stories: it already has a
@@ -54,7 +54,7 @@ Only build inside the product repo if the user explicitly names it as the destin
 add the new story folder and change nothing else there.
 
 Confirm both in one line before starting: "Product: `../acme-web` (read-only). Story:
-`../km-stories/stories/acme-web/`." Name the folder after the product (add the flow,
+`../my-stories/stories/acme-web/`." Name the folder after the product (add the flow,
 `acme-web-onboarding`, if the product already has a story). If that folder already exists,
 ask whether to update it or start a new one.
 

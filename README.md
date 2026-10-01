@@ -31,8 +31,8 @@ never defaults to the product repo.
 ## Quick start
 
 ```bash
-git clone <this-repo-url> km-stories
-code km-stories                        # then File → Add Folder to Workspace → your product repo
+git clone <this-repo-url> my-stories
+code my-stories                        # then File → Add Folder to Workspace → your product repo
 ```
 
 Start your agent, give it access to both repos, and ask for a story:
@@ -40,13 +40,13 @@ Start your agent, give it access to both repos, and ask for a story:
 ```text
 # Claude Code
 /add-dir ../my-product
-/scroll-story use Fly for our onboarding flow in ../my-product, save the story in ../km-stories
+/scroll-story use Fly for our onboarding flow in ../my-product, save the story in ../my-stories
 
 # Codex (start with: codex --add-dir ../my-product)
-$scroll-story use Midnight for the approval flow in ../my-product, save it in ../km-stories
+$scroll-story use Midnight for the approval flow in ../my-product, save it in ../my-stories
 ```
 
-The story appears in `km-stories/stories/my-product/`. Run it with `npm install && npm run dev`
+The story appears in `my-stories/stories/my-product/`. Run it with `npm install && npm run dev`
 in that folder.
 
 ## Install the skill elsewhere

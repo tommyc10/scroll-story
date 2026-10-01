@@ -24,7 +24,7 @@ $scroll-story use Midnight for our approval flow
 Say which repo is the product and which repo the story should be saved in:
 
 ```text
-/scroll-story use Fly for the checkout flow in ../acme-web, save the story in ../km-stories
+/scroll-story use Fly for the checkout flow in ../acme-web, save the story in ../my-stories
 ```
 
 The product repo is read-only: the agent reads how it works, its styles, components and
@@ -42,7 +42,7 @@ verification. Zoom remains an optional alternative when specifically wanted.
 The skill works from anywhere; where it's installed doesn't decide where stories go.
 
 - **In a stories repo**: clone the scroll-story repository (rename it if you like, e.g.
-  `km-stories`). The skill lives at `.claude/skills/scroll-story/` (Claude Code) and
+  `my-stories`). The skill lives at `.claude/skills/scroll-story/` (Claude Code) and
   `.agents/skills/scroll-story` is a relative symlink to it (Codex). Stories go in its
   `stories/` folder by default.
 - **In another skills folder**: copy this folder to wherever your agent reads skills, such as
