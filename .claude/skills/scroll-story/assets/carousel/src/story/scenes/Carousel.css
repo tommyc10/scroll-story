@@ -1,0 +1,159 @@
+/* Carousel. Geometry comes from lib/carousel.ts. */
+
+.cr-view {
+  position: absolute;
+  inset: 0;
+}
+
+/* The lens: looks at the middle of the canvas. */
+.cr-cam {
+  position: absolute;
+  inset: 0;
+  perspective: 1700px;
+  perspective-origin: 960px 430px;
+}
+
+/* Everything below hangs from one point: the middle of the canvas, at the front panel's depth. */
+.cr-tilt,
+.cr-ring,
+.cr-panel {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.cr-tilt {
+  top: 430px;
+  left: 960px;
+  width: 0;
+  height: 0;
+}
+
+.cr-ring,
+.cr-panel,
+.cr-between {
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+.cr-front,
+.cr-rear {
+  position: absolute;
+  top: -270px;
+  left: -350px;
+  width: 700px;
+  height: 540px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* A service window is drawn at 610,160 on a full stage; shift the stage so the window lands
+ * on the panel. */
+.cr-face {
+  position: absolute;
+  top: -160px;
+  left: -610px;
+  width: 1440px;
+  height: 900px;
+}
+
+.cr-rear {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border-radius: 20px;
+  background: var(--l2);
+  box-shadow:
+    inset 0 0 0 1px var(--line-2),
+    inset 0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent);
+  font-size: 84px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  transform: rotateY(180deg);
+}
+
+.cr-rear-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--c);
+}
+
+.cr-rear-verb {
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--fg-3);
+}
+
+.cr-between {
+  position: absolute;
+}
+
+.cr-chip {
+  position: absolute;
+  top: 300px;
+  translate: -50% 0;
+  height: 44px;
+  padding: 0 20px 0 16px;
+  font-size: 20px;
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--c) 50%, transparent),
+    0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.cr-chip .mono {
+  font-size: 17px;
+}
+
+.cr-chip::before {
+  width: 11px;
+  height: 11px;
+}
+
+/* ---------- the floor ---------- */
+
+.cr-floor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+}
+
+.cr-base {
+  fill: none;
+  stroke: var(--line-3);
+  stroke-width: 3;
+  stroke-dasharray: 2 18;
+  stroke-linecap: round;
+}
+
+.cr-arc {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.cr-foot {
+  fill: var(--c);
+}
+
+.cr-tag {
+  position: absolute;
+  top: 110px;
+  left: 610px;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--green-wash);
+  box-shadow: inset 0 0 0 1px rgba(69, 196, 122, 0.4);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 12px;
+}

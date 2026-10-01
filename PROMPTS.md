@@ -44,6 +44,46 @@ Use the scroll-story skill with the Midnight style. Make a detailed walkthrough 
 approval flow in my-product, for team leads who will use it every day. Save it in my-stories.
 ```
 
+**Carousel**: connected service screens stand on a 3D turntable. Each turn brings the
+receiving service forward, carries the producer's payload through the foreground, and
+lights their floor connection. Good for following one object across several services.
+
+```text
+Use the scroll-story skill with Carousel. Start from the bundled assets/carousel reference.
+Follow one customer order through accounts, checkout, payments and fulfilment. Read those
+repos without changing them and save the story in my-stories as stories/acme-platform.
+```
+
+## Replicate the Carousel choreography
+
+Replace the repo paths and destination below. Keep the motion, then adapt the content to
+what the services actually do. The bundled reference opens directly in Carousel and
+includes the complete source, chapter navigation, replay and static fallback.
+
+```text
+Use the scroll-story skill's Carousel style. Start from its bundled assets/carousel app
+and read references/carousel.md before adapting it.
+
+Read these five service repos without changing them: <repo-1>, <repo-2>, <repo-3>,
+<repo-4>, <repo-5>. Save the standalone story in <stories-repo>/stories/<story-name>.
+Trace their actual API/event hand-offs and follow one concrete object through the system.
+
+Keep the reference's choreography: five upright screens on a 3D turntable, an overhead
+opening, then a descent to eye level. Each service receives an In payload, performs its
+own visible operation and reveals its Out payload. Rotate the ring 72 degrees per
+hand-off; pull back and tilt up during the turn, then settle on the next screen. Carry
+the producer-colored payload chip through the foreground and light its floor arc
+permanently. Keep that same color and object identity in the receiver's In row.
+
+Use our brand and each service's real UI; visualize actual processing for services without
+screens. If a verified feedback link returns to the first service, show the returned
+payload changing that service before craning above the completed ring. Otherwise end
+above the real forward flow. Preserve the 3D depth, readable captions, chapter navigation,
+replay, one GSAP scrub timeline and reversible state. Include the small-screen and
+reduced-motion storyboard. Build and inspect settled frames, turns and rewind before
+handing it over.
+```
+
 ## Say exactly what to show
 
 ```text
@@ -87,4 +127,4 @@ as stories/acme-platform.
   agent looks for a folder that is clearly for stories, or asks.
 - Ask to see the chapter plan first. It's the cheapest point to change direction.
 - Say who the story is for. It changes what the agent chooses to show.
-- If you don't pick a style, the agent chooses Fly or Midnight and tells you why.
+- Choose Fly, Midnight or Carousel explicitly when you have a preference. Fly is the default.

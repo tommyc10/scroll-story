@@ -1,0 +1,282 @@
+/* The map. Positions come from lib/ring.ts; this file is how things look. */
+
+/* When the camera dives into a node the map grows far past its home on the right. `--edge`
+ * fades it out to the left of that line so it never runs under the captions. 0 = no fade. */
+.sc-map {
+  --edge: 0px;
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(var(--edge) - 90px), #000 var(--edge));
+  mask-image: linear-gradient(90deg, transparent calc(var(--edge) - 90px), #000 var(--edge));
+}
+
+.map-world {
+  position: absolute;
+  inset: 0;
+}
+
+.map-svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.map-base {
+  fill: none;
+  stroke: var(--line-3);
+  stroke-width: 1.5;
+  stroke-dasharray: 1 9;
+  stroke-linecap: round;
+}
+
+/* A soft halo over the whole ring once the last hand-off lands. */
+.map-closed {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 16;
+}
+
+.map-arc {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.map-chev {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- a service on the ring ---------- */
+
+.map-node {
+  position: absolute;
+  width: 168px;
+  height: 72px;
+  border-radius: 16px;
+  background: var(--l3);
+  box-shadow:
+    inset 0 1px 0 var(--card-edge),
+    inset 0 0 0 1px var(--line-2),
+    0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.node-in {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.node-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent);
+}
+
+.node-text b {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.node-verb {
+  font-size: 12px;
+  color: var(--fg-3);
+}
+
+/* Lit while its service has the protagonist. */
+.node-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 0 1.5px var(--c),
+    0 0 0 5px color-mix(in srgb, var(--c) 14%, transparent),
+    0 0 44px color-mix(in srgb, var(--c) 32%, transparent);
+  pointer-events: none;
+}
+
+.node-done {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--c);
+  box-shadow: 0 0 0 3px var(--bg);
+  color: #0a0a0a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.node-tag {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  translate: -50% 0;
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  background: var(--green-wash);
+  box-shadow: inset 0 0 0 1px rgba(69, 196, 122, 0.4);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+/* ---------- what travels ---------- */
+
+/* A hand-off: one chip, coloured by the service that produced it. The same chip appears on
+ * the map's arcs and in each service's In and Out rows, so it reads as the same object. */
+.pl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c) 12%, var(--l2));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 42%, transparent);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.pl::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--c);
+}
+
+.pl b {
+  font-weight: 600;
+}
+
+.pl .mono {
+  font-size: 11.5px;
+  color: var(--fg-2);
+}
+
+/* A zero-size anchor so a label of any width is centred on its point. */
+.map-at {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.map-at > * {
+  position: absolute;
+  translate: -50% -50%;
+}
+
+.map-label {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--c) 42%, transparent),
+    0 0 0 4px var(--bg);
+}
+
+/* The token rides an arm that rotates about the ring's centre, so it follows the arcs exactly. */
+.map-orbit {
+  position: absolute;
+  top: 470px;
+  left: 960px;
+  width: 0;
+  height: 0;
+}
+
+.map-token {
+  position: absolute;
+  top: -258px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.12),
+    0 0 26px rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- the hub: what the protagonist is right now ---------- */
+
+.map-hub {
+  position: absolute;
+  top: 406px;
+  left: 840px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 240px;
+  text-align: center;
+}
+
+.hub-what {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-2);
+}
+
+.hub-is {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--fg-3);
+}
+
+.hub-forms {
+  display: grid;
+  margin-top: 2px;
+}
+
+.hub-form {
+  grid-area: 1 / 1;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+/* End state is the last form; the story starts on the first. */
+.hub-form:not(:last-child) {
+  opacity: 0;
+}
+
+.hub-closed {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  margin-top: 12px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--green-wash);
+  box-shadow: inset 0 0 0 1px rgba(69, 196, 122, 0.35);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hub-closed::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--green);
+}

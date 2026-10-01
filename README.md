@@ -4,10 +4,12 @@ An agent skill for **Claude Code** and **Codex** that builds scroll-driven produ
 a pinned, cinematic page where the scroll bar is the play button. Scrolling plays (and
 rewinds) a film of your product doing its job, choreographed with GSAP ScrollTrigger in React.
 
-It ships with two complete reference builds to start from:
+It ships with three complete reference builds to start from:
 
 - **Fly**: a 3D camera dollies, orbits and cranes through floating product UI.
 - **Midnight**: a detailed screen-based walkthrough with camera dives and fly-tos.
+- **Carousel**: service screens stand on a 3D turntable; each turn carries a payload to the
+  next service and lights the connection between them.
 
 Plus a minimal starter, a storyboarding guide, ~25 transition recipes, GSAP notes, motion and
 accessibility guidance, and Playwright scripts that check settled frames, mid-transition
@@ -44,6 +46,10 @@ Start your agent, give it access to both repos, and ask for a story:
 
 # Codex (start with: codex --add-dir ../my-product)
 $scroll-story use Midnight for the approval flow in ../my-product, save it in ../my-stories
+
+# Either agent: use Carousel to connect several services
+Use the scroll-story skill with Carousel for the services in ../accounts, ../checkout and
+../payments. Follow one order through their real hand-offs. Save it in ../my-stories.
 ```
 
 The story appears in `my-stories/stories/my-product/`. Run it with `npm install && npm run dev`

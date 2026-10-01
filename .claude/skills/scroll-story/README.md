@@ -2,8 +2,9 @@
 
 Builds scroll-driven product stories: a pinned, cinematic page where scrolling plays (and
 rewinds) a film of a product's workflow, with camera moves that "scroll into" each step. It's
-based on two primary versions: **Fly** (`assets/fly/`, the default 3D film) and
-**Midnight** (`assets/midnight/`, the original detailed walkthrough).
+based on three primary versions: **Fly** (`assets/fly/`, the default 3D film),
+**Midnight** (`assets/midnight/`, the original detailed walkthrough), and **Carousel**
+(`assets/carousel/`, linked service screens on a 3D turntable).
 
 ## Use it
 
@@ -12,6 +13,7 @@ In Claude Code:
 ```text
 /scroll-story use Fly for our onboarding flow, following one user from sign-up to first invoice
 /scroll-story use Midnight for a detailed walkthrough of our approval flow
+/scroll-story use Carousel to follow one order through our connected services
 ```
 
 In Codex:
@@ -19,6 +21,7 @@ In Codex:
 ```text
 $scroll-story use Fly for our onboarding flow
 $scroll-story use Midnight for our approval flow
+$scroll-story use Carousel to show how our services hand off one customer order
 ```
 
 Say which repo is the product and which repo the story should be saved in:
@@ -53,9 +56,10 @@ The skill works from anywhere; where it's installed doesn't decide where stories
 Open the product repo and the stories repo in the same VS Code workspace, and give the agent
 access to both if needed: `/add-dir <path>` in Claude Code, `codex --add-dir <path>` in Codex.
 
-The full Fly and Midnight reference applications are bundled in `assets/fly/` and
-`assets/midnight/`. Copying this skill folder includes everything needed except installed
-package dependencies. See `references/builds.md` for setup.
+The full Fly, Midnight and Carousel reference applications are bundled in `assets/fly/`,
+`assets/midnight/` and `assets/carousel/`. Copying this skill folder includes everything
+needed except installed package dependencies. See `references/builds.md` for setup and
+`references/carousel.md` for the turntable geometry and hand-off choreography.
 
 ## What's inside
 
@@ -63,7 +67,8 @@ package dependencies. See `references/builds.md` for setup.
 scroll-story/
 ├── SKILL.md                     the workflow and rules (both agents read this first)
 ├── references/
-│   ├── builds.md                Fly / Midnight source selection and scaffolding
+│   ├── builds.md                Fly / Midnight / Carousel source selection and scaffolding
+│   ├── carousel.md              turntable geometry, payload continuity and multi-repo adaptation
 │   ├── directions.md            motion details, including optional Zoom / Snap
 │   ├── storyboarding.md         protagonist, arc, carry-overs, captions, pacing
 │   ├── architecture.md          stage, pin + scrub, end-state scenes, one timeline, load gate
@@ -75,6 +80,7 @@ scroll-story/
 │   └── midnight-case-study.md   the reference build, beat by beat, and what went wrong
 ├── assets/fly/                  complete Fly build, with optional Zoom / Snap
 ├── assets/midnight/             complete Midnight build
+├── assets/carousel/             complete Carousel build, opening directly in this style
 ├── assets/starter/              a working mini story (Vite + React + TS + GSAP) to copy
 └── scripts/
     ├── shoot.mjs                seek-and-screenshot at timeline times (Playwright)

@@ -1,6 +1,6 @@
 ---
 name: scroll-story
-description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating product UI) or Midnight (the original screen-based walkthrough), with working reference builds, a starter, transition recipes, and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and scrollytelling; works with Claude Code and Codex. It reads the product from a read-only repo in the workspace and builds each story as a standalone app in the stories repo the user chooses.
+description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating UI), Midnight (a detailed screen walkthrough), or Carousel (linked services on a 3D turntable), with bundled reference builds and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and stories spanning several service repos; works with Claude Code and Codex. Read the product repos without changing them and build a standalone app in the user's stories repo.
 ---
 
 # Scroll story
@@ -10,8 +10,9 @@ Build a page where **the scroll bar is the play button**: the screen pins, and s
 by physically carrying something across: a ticket shrinks into one square of a chart, a query
 flies into the rule page, the page folds down into a gate.
 
-The two primary reference builds are **Fly** (`assets/fly/`, default direction) and
-**Midnight** (`assets/midnight/`). Both complete source builds are bundled with this skill; paths are relative to the skill directory.
+The three primary reference builds are **Fly** (`assets/fly/`, default direction),
+**Midnight** (`assets/midnight/`) and **Carousel** (`assets/carousel/`, linked services on a
+3D turntable). All three complete source builds are bundled; paths are relative to the skill directory.
 Use the same skill in Claude Code or Codex. Read `references/builds.md` to locate the source
 and scaffold the chosen version; `references/midnight-case-study.md` documents the original.
 
@@ -106,14 +107,23 @@ features or steps. If it's unclear who the story is for or which flow matters, a
 question. Otherwise pick the flow that best shows the product's value and say why, citing the
 files that show it.
 
+When the user names several service repos, read all of them as `PRODUCT` inputs. Trace the
+hand-offs between them: the producer, receiver, payload and concrete evidence (an API call,
+event, shared ID or contract). Follow one example across the services. Distinguish verified
+connections from assumptions; a circular presentation is not evidence of a business loop.
+Use the user's chosen story folder name for a company-wide offering.
+
 ### 2. Pick a direction
 
-Choose between the two primary versions, preserving the product's own colours, type and components:
+Choose among the three primary versions, preserving the product's own colours, type and components:
 
 - **Fly**: a 3D camera dollies, orbits and cranes through floating UI. Use for cinematic stories
   about scale and systems. Fly is the default.
 - **Midnight**: the original screen-based product walkthrough, with a camera dive, fly-tos,
   approval, guardrails and audit. Use for a detailed demonstration of a workflow.
+- **Carousel**: the service screens stand around a 3D turntable. Start above the ring,
+  descend to the first screen, and rotate the next service to the front at each hand-off.
+  Use to show how separate services or repos connect. Read `references/carousel.md`.
 
 Honour an explicit choice. Otherwise infer the fit from the brief and state your choice; ask
 only if the distinction materially affects an unclear request. Zoom (repeated dives into
@@ -135,6 +145,9 @@ dev and build command in that story folder.
 For **Fly**, start from `assets/fly/` as described in `references/builds.md`; its 3D
 world and orbit camera are not in the generic starter. For the full **Midnight** version,
 start from `assets/midnight/`. Keep the chosen engine, then adapt the product and chapters.
+For **Carousel**, copy `assets/carousel/`; it opens directly in Carousel and includes the
+five-service reference, hand-off chips, floor links and a static fallback. Adapt it using
+`references/carousel.md`, including whether the real flow closes back to the first service.
 
 For a minimal **Midnight-style** story instead of the full reference, copy `assets/starter/`
 into the story folder instead.
@@ -182,6 +195,8 @@ already reads 214, the reason is already typed. Keep captions clear of the canva
 x 96–476, so scene content goes roughly in x 520–1400. For Fly, keep the shared
 fixed screen stage but place world objects in 3D using `space.ts`; preserve the transform
 chain described in `references/directions.md` §5 instead of flattening them into 2D scenes.
+For Carousel, preserve the perspective → tilt → ring → panel chain in `Carousel.css`;
+`references/carousel.md` identifies which wrappers can safely be faded or clipped.
 
 ### 6. Choreograph the chapters
 
@@ -204,6 +219,7 @@ step and say so. Don't invent a character or add an avatar library unless asked.
 
 - Keep the chosen fallback complete: Midnight uses `Storyboard.tsx` stills; Fly uses the
   readable chapter text in `shared/Board.tsx`.
+  Carousel uses `Storyboard.tsx` with a static connection map and each service's screen.
 - Verify with the scripts (`references/verification.md`): screenshots at settled and
   mid-transition times, a rewind pass, the reload check, the phone/reduced-motion pass,
   `npm run build`. Look at the screenshots; don't just check that they exist. The scripts need
@@ -249,8 +265,9 @@ Read what the current step needs; you don't need all of them up front.
 
 | File | Read it when |
 | --- | --- |
-| `references/builds.md` | Choosing and scaffolding Fly or Midnight in either agent (steps 2–4) |
-| `references/directions.md` | Fly / Midnight motion, plus optional Zoom and Snap recipes (step 2) |
+| `references/builds.md` | Choosing and scaffolding Fly, Midnight or Carousel (steps 2–4) |
+| `references/directions.md` | Direction selection, plus optional Zoom and Snap recipes (step 2) |
+| `references/carousel.md` | Carousel geometry, hand-offs, multi-repo adaptation and verification |
 | `references/storyboarding.md` | Planning chapters, captions, pacing (step 3) |
 | `references/architecture.md` | Before writing scenes or touching `Film.tsx` (steps 4–5) |
 | `references/transitions.md` | Choreographing chapters: the recipe catalogue with code (step 6) |

@@ -1,0 +1,463 @@
+/* The five service windows. One frame (head, In, body, Out) and five bodies. `--c` is the
+ * service's own colour. */
+
+.sv {
+  position: absolute;
+  top: 160px;
+  left: 610px;
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  height: 540px;
+  border-radius: 20px;
+  box-shadow:
+    inset 0 1px 0 var(--card-edge),
+    inset 0 0 0 1px var(--line-2),
+    0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.sv-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  padding: 0 16px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sv-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent);
+}
+
+.sv-name {
+  margin-left: 4px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.sv-team {
+  font-size: 13px;
+  color: var(--fg-3);
+}
+
+.sv-status {
+  margin-left: auto;
+}
+
+/* End state is "done"; the story starts each service on "working". */
+.sv-working {
+  opacity: 0;
+}
+
+.sv-status .badge {
+  justify-self: end;
+}
+
+.sv-loop {
+  flex: none;
+  margin-left: 6px;
+}
+
+.sv-loop-ring {
+  fill: none;
+  stroke: var(--line-2);
+  stroke-width: 1;
+}
+
+.sv-loop-dot[data-state='todo'] {
+  fill: rgba(255, 255, 255, 0.22);
+}
+
+.sv-loop-dot[data-state='done'] {
+  fill: var(--c);
+}
+
+.sv-loop-dot[data-state='here'] {
+  fill: var(--c);
+  stroke: color-mix(in srgb, var(--c) 30%, transparent);
+  stroke-width: 4;
+}
+
+/* ---------- In and Out: the contract with the neighbours ---------- */
+
+.sv-io {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 58px;
+  padding: 0 22px;
+}
+
+.sv-in {
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.sv-out {
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 20px 20px;
+  background: color-mix(in srgb, var(--c) 5%, transparent);
+}
+
+.sv-io-label {
+  font-size: 13px;
+  color: var(--fg-2);
+}
+
+.sv-io-dir {
+  display: inline-block;
+  width: 34px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.sv-body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  padding: 0 30px;
+}
+
+.sv-sub {
+  font-size: 13px;
+  color: var(--fg-3);
+}
+
+/* ---------- Sentinel ---------- */
+
+.sn-read {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sn-label {
+  padding-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-3);
+}
+
+.sn-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.sn-temp {
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.sn-unit {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--fg-2);
+}
+
+.sn-chart {
+  display: block;
+  margin-top: 6px;
+  overflow: visible;
+}
+
+.sn-limit {
+  stroke: var(--line-3);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+
+.sn-line {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.sn-hit {
+  fill: var(--c);
+  stroke: color-mix(in srgb, var(--c) 28%, transparent);
+  stroke-width: 10;
+}
+
+.sn-limit-label {
+  fill: var(--fg-3);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/* ---------- Midnight ---------- */
+
+.md-rules,
+.cl-roster,
+.dw-steps,
+.hc-record {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.md-rule {
+  display: grid;
+  grid-template-columns: 74px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 11px;
+  background: var(--l1);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 14px;
+}
+
+.md-tag {
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--tint);
+  font-size: 11.5px;
+  line-height: 22px;
+  color: var(--fg-3);
+}
+
+.md-verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+  font-size: 13.5px;
+  color: var(--fg-2);
+}
+
+.md-verdict b {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+/* ---------- Comlink ---------- */
+
+.cl-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.cl-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 50px;
+  padding: 0 14px;
+  border-radius: 11px;
+  background: var(--l1);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 14px;
+}
+
+.cl-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  box-shadow:
+    inset 0 0 0 1.5px var(--c),
+    0 0 0 4px color-mix(in srgb, var(--c) 14%, transparent);
+}
+
+.cl-avatar {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--l5);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.cl-who {
+  font-weight: 500;
+}
+
+.cl-role {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--fg-3);
+}
+
+.cl-row[data-on] .cl-role {
+  color: var(--c);
+}
+
+.cl-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 0 16px;
+  height: 48px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+.cl-typed {
+  font-size: 12.5px;
+}
+
+.cl-ack {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--green);
+}
+
+/* ---------- Droidworks ---------- */
+
+.dw-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.dw-time {
+  font-size: 15px;
+  color: var(--fg-2);
+}
+
+.dw-mins {
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+.dw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.dw-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 56px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: var(--l1);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 15px;
+}
+
+.dw-box {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1.5px var(--line-3);
+}
+
+.dw-tick {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--c);
+  color: #0a0a0a;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---------- Holocron ---------- */
+
+.hc-record {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hc-rail {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 4px;
+  width: 1px;
+  background: var(--line-3);
+  transform-origin: top;
+}
+
+.hc-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9px 44px 96px 1fr;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.hc-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--c);
+  box-shadow: 0 0 0 4px var(--l3);
+}
+
+.hc-from {
+  font-weight: 500;
+  color: var(--c);
+}
+
+.hc-insight {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+.hc-insight b {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}

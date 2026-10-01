@@ -31,8 +31,9 @@ depth readout).
 | A launch / keynote pace, one idea per beat | **Snap** | Each flick plays one move; the layout does the travelling |
 | Scale, systems, flow | **Fly** | A 3D camera flies through floating UI |
 | A calm walkthrough of the product | **Midnight** | The starter / `assets/midnight/`: fly-tos, one dive |
+| How independent services hand work to each other | **Carousel** | Standing service screens on a 3D turntable; a turn carries each output to the next |
 
-Choose Fly or Midnight from the brief unless the user requests another direction. Honour an
+Choose Fly, Midnight or Carousel from the brief unless the user requests another direction. Honour an
 explicit choice and name it in the storyboard table. Zoom and Snap are optional alternatives.
 
 ## 3. Zoom
@@ -139,3 +140,12 @@ over the last); a **scan** (a line sweeps the product and everything it passes u
 **split** (text scrolls normally on the left while one pinned product panel morphs on the
 right). The test: can you say the grammar in one sentence, and does every chapter boundary
 carry something?
+
+## 10. Carousel
+
+Use `assets/carousel/` and read `carousel.md`. The camera starts above a ring of standing
+service screens, descends to the active one, pulls back and tilts slightly as the table turns,
+then settles on the receiver. Colored payload chips sit between producer and receiver; the
+floor link lights in the producer's color and stays lit. For a verified loop, the final
+hand-off returns to and changes the first service before the camera rises to show the whole
+ring. The bundled app opens directly in this direction.
