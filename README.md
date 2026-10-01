@@ -49,6 +49,9 @@ $scroll-story use Midnight for the approval flow in ../my-product, save it in ..
 The story appears in `my-stories/stories/my-product/`. Run it with `npm install && npm run dev`
 in that folder.
 
+More requests to copy, including choosing a style and stories that span several repos, are
+in [PROMPTS.md](PROMPTS.md).
+
 ## Install the skill elsewhere
 
 Copy `.claude/skills/scroll-story` to wherever your agent reads skills (for example
