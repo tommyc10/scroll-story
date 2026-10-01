@@ -5,7 +5,7 @@ until the first beat wakes them, hops to a perch beside whatever matters in each
 reacts in short speech bubbles, gets busy while the product works, celebrates when something
 good lands, and falls asleep again at the end. Done well, it's the part people mention first.
 
-**This step is optional and conditional.** Only add a guide when the target workspace already
+**This step is optional and conditional.** Only add a guide when the product repo or workspace already
 has a character to use. Never invent one, draw one, or pull in a third-party avatar library
 unless the user explicitly asks. None of the bundled reference builds include a character.
 
@@ -15,7 +15,7 @@ unless the user explicitly asks. None of the bundled reference builds include a 
 
 ## 1. Find a character first
 
-Look in the target repo and any other folders open in the workspace:
+Look in the product repo and any other folders open in the workspace:
 
 - Folders or packages named like `avatar(s)`, `mascot`, `character(s)`, `bot(s)`, `sprite(s)`,
   `lottie`, `illustrations`, or a brand/assets folder.

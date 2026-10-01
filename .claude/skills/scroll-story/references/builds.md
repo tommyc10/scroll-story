@@ -3,8 +3,8 @@
 Both agents use the sources bundled with this skill. All `assets/` paths below are relative
 to the directory containing `SKILL.md`, regardless of the current working directory.
 No separate checkout or reference repository is required. Copy *from* the skill directory
-*into* the target repo (see "Two repos" in `SKILL.md`); never install, build or run inside
-the skill directory.
+*into* the story folder, `stories/<product-name>/` in the skill's repo (see "Two repos" in
+`SKILL.md`). Never install, build or run inside the skill directory or the product repo.
 
 | Version | Source | Preview | Choose it for |
 | --- | --- | --- | --- |
@@ -13,15 +13,14 @@ the skill directory.
 
 ## Use the bundled source
 
-Copy `assets/fly/` or `assets/midnight/` from this skill into the story folder in the target repo. Both
+Copy `assets/fly/` or `assets/midnight/` from this skill into the story folder. Both
 include source code, package manifests, lockfiles, and build configuration. `assets/starter/` is a smaller optional
 Midnight-style foundation, not a substitute for the full builds.
 
-Exclude `node_modules`, `dist`, `.git`, logs and `*.tsbuildinfo` when copying. Run `npm install`, dev and build commands from the target. In an existing
-project, integrate the source and dependencies while preserving its package scripts, stack
-and server configuration. For a new standalone copy, run `npm install` and `npm run build`.
+Exclude `node_modules`, `dist`, `.git`, logs and `*.tsbuildinfo` when copying. Run `npm install`, dev and build commands from the story folder; it's a standalone app.
+Rename `name` in its `package.json` to the story folder's name.
 Use the dev-server URL printed at startup; the bundled configurations do not force a port.
-Set `DASHBOARD_URL` to the target product's destination; `/dashboard` is a placeholder.
+Set `DASHBOARD_URL` to the product's real destination; `/dashboard` is a placeholder.
 
 ## Fly
 
@@ -56,4 +55,4 @@ older notes may call it Console.
 Follow `verification.md` against the selected app's URL. Check a settled chapter, a camera
 move midway through, rewind, reload, mobile and reduced motion, then run the production build.
 Verify that the default URL renders the requested direction. Replace reference dashboard
-links with the target product's destination before shipping a new story.
+links with the product's real destination before shipping a new story.

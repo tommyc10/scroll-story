@@ -84,7 +84,7 @@ and optionally an aside. Rules of thumb from Midnight:
 
 ## 7. Mining the product
 
-Read the product's code in the target repo (not the skill's reference builds):
+Read the product's code in the product repo (read-only; not the skill's reference builds):
 - **Tokens**: copy its theme variables into `styles/tokens.css`. Match its easing tokens.
 - **Components**: rebuild the key ones at stage size (a card, a badge, the main detail page).
   Don't import the real components; they bring layout and state you don't want. Copy the

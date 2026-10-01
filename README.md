@@ -15,18 +15,19 @@ frames, rewind, reload flashes and the reduced-motion fallback.
 
 ## How it works
 
-The skill lives in this repo; your product lives in another. The agent reads your product's
-code (tokens, components, mock data, domain language) from the **target repo**, and writes,
-installs and verifies the story **there**. It never writes into this repo.
+Open this repo in VS Code with your product's repo alongside it in the same workspace. The
+agent reads your product's code (tokens, components, mock data, domain language) from the
+product repo, **without changing anything there**, and builds the story as a standalone app in
+this repo, in `stories/<product-name>/`.
 
 ## Quick start
 
 ```bash
-git clone <this-repo-url> scroll-story
-code scroll-story                      # then File → Add Folder to Workspace → your product repo
+git clone <this-repo-url> km-stories
+code km-stories                        # then File → Add Folder to Workspace → your product repo
 ```
 
-Start your agent in `scroll-story`, give it access to your product, and ask for a story:
+Start your agent in `km-stories`, give it read access to your product, and ask for a story:
 
 ```text
 # Claude Code
@@ -37,20 +38,22 @@ Start your agent in `scroll-story`, give it access to your product, and ask for 
 $scroll-story use Midnight for the approval flow in ../my-product
 ```
 
-If you don't name a path, the agent uses the one other folder open in the session, or asks.
+The story appears in `km-stories/stories/my-product/`. Run it with `npm install && npm run dev`
+in that folder. If you don't name a product, the agent uses the one other folder open in the
+session, or asks.
 
-## Install elsewhere
+## Install globally
 
-- **Globally**: copy `.claude/skills/scroll-story` to `~/.claude/skills/scroll-story` and link
-  `~/.codex/skills/scroll-story` to it. Then start the agent in any product repo.
-- **Inside a product repo**: copy the folder to `.claude/skills/scroll-story` and add
-  `.agents/skills/scroll-story` as a relative symlink to it.
+Copy `.claude/skills/scroll-story` to `~/.claude/skills/scroll-story` and link
+`~/.codex/skills/scroll-story` to it. Without a repo of its own, the agent asks where each
+story should go.
 
 ## Layout
 
 ```
 .claude/skills/scroll-story/     the skill (SKILL.md, references, assets, scripts)
 .agents/skills/scroll-story  ->  symlink to the same folder, for Codex
+stories/                         where the agent builds each story, one folder per product
 ```
 
 See [the skill's README](.claude/skills/scroll-story/README.md) for what's inside, and

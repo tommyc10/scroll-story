@@ -1,6 +1,6 @@
 ---
 name: scroll-story
-description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating product UI) or Midnight (the original screen-based walkthrough), with working reference builds, a starter, transition recipes, and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and scrollytelling; works with Claude Code and Codex. The skill can live in its own repo: it reads the product from, and writes the story into, the separate target repo the user points it at.
+description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating product UI) or Midnight (the original screen-based walkthrough), with working reference builds, a starter, transition recipes, and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and scrollytelling; works with Claude Code and Codex. The skill lives in its own repo: it reads the product from a separate, read-only repo in the workspace and builds each story as a standalone app in the skill repo's stories/ folder.
 ---
 
 # Scroll story
@@ -15,32 +15,42 @@ The two primary reference builds are **Fly** (`assets/fly/`, default direction) 
 Use the same skill in Claude Code or Codex. Read `references/builds.md` to locate the source
 and scaffold the chosen version; `references/midnight-case-study.md` documents the original.
 
-## Two repos: the skill and the target
+## Two repos: the story repo and the product repo
 
-This skill usually lives in its own repo, separate from the product it tells a story about.
-Keep the two apart:
+This skill lives in its own repo (for example `km-stories`), opened in VS Code alongside the
+product's repo. The product repo is **read-only**; every story is built in the skill's repo.
 
 - **Skill directory** (`SKILL_DIR`): the folder containing this `SKILL.md`. Every `assets/`,
-  `references/` and `scripts/` path in this skill is relative to it. Treat it as **read-only**:
-  copy from it, never build, install or write the story inside it.
-- **Target repo** (`TARGET`): the product's repo. You read its code to learn the product, and
-  the story is written, installed, run and verified **there**.
+  `references/` and `scripts/` path in this skill is relative to it. Never edit it.
+- **Story repo** (`STORY_REPO`): the git repo that contains `SKILL_DIR`
+  (`git -C "$SKILL_DIR" rev-parse --show-toplevel`). Each story is a standalone app in its own
+  folder, `STORY_REPO/stories/<product-name>/`. All copying, installing, running and building
+  happens there.
+- **Product repo** (`PRODUCT`): the product the story is about. Read its code to learn the
+  product: tokens, components, mock data, domain language. **Never write, install or run
+  anything in it.**
 
-Resolve `TARGET` before step 1, in this order:
+Resolve `PRODUCT` before step 1, in this order:
 
-1. A path or repo the user names in the request (`/scroll-story ... in ../acme-web`).
+1. A path or repo the user names in the request (`/scroll-story ... for ../acme-web`).
 2. The other folders open in the session: VS Code workspace roots, directories added with
-   `/add-dir` or `--add-dir`, or the current working directory when it is not the skill's repo.
-   Exclude a repo that exists only to hold skills. (If the skill is vendored into the product's
-   own repo, under its `.claude/skills/`, that repo is the target.) If exactly one candidate
-   remains, use it.
-3. Otherwise, ask the user for the path. Don't guess, and don't fall back to the skill's repo.
+   `/add-dir` or `--add-dir`, or the working directory, excluding `STORY_REPO`. If exactly one
+   candidate remains, use it.
+3. Otherwise, ask the user for the path. Don't guess.
 
-Confirm the choice in one line ("Target: `~/code/acme-web`; story goes in `acme-web/story/`").
-Inside `TARGET`, place the story where the repo's conventions suggest: a route or page in an
-existing app, a workspace package in a monorepo, or a standalone `story/` folder. If you can't
-write to `TARGET` (sandbox or permissions), say so and ask the user to add it
-(`/add-dir <path>` in Claude Code, `--add-dir <path>` in Codex) rather than writing elsewhere.
+Then confirm in one line: "Product: `../acme-web` (read-only). Story: `km-stories/stories/acme-web/`."
+Name the folder after the product (add the flow, `acme-web-onboarding`, if the product already
+has a story). If that folder already exists, ask whether to update it or start a new one.
+
+If `SKILL_DIR` isn't inside a repo of its own (for example, installed globally in
+`~/.claude/skills/`), or `STORY_REPO` turns out to be the product repo, ask the user where the
+stories folder should go instead of writing into the product. If you can't read `PRODUCT`
+(sandbox or permissions), ask the user to add it (`/add-dir <path>` in Claude Code,
+`--add-dir <path>` in Codex).
+
+Because the story lives in a different repo, it can't import the product's code. Rebuild the
+components it needs at stage size and copy token values, fonts (via their npm packages, such
+as `@fontsource`, where the license allows) and any logos or images into the story folder.
 
 ## What good looks like
 
@@ -63,9 +73,9 @@ A viewer should feel they're *inside* the product, not watching slides. Concrete
 Work through these in order. Steps 1–3 decide whether the result is memorable; steps 4–8 are
 mostly craft on a proven base.
 
-### 1. Understand the product and mine the target repo
+### 1. Understand the product and mine the product repo
 
-Find out what the product does and which flow to tell. Read the product's code in `TARGET`
+Find out what the product does and which flow to tell. Read the product's code in `PRODUCT`
 first (not this skill's reference builds, which are a different product): its theme/tokens file, its key components (cards, badges, buttons, tables), its
 mock data and its domain language. The story should reuse these, not reinvent them. If it's
 unclear who the story is for or which flow matters, ask one short question. Otherwise pick the
@@ -76,14 +86,13 @@ flow that best shows the product's value and say so.
 Choose between the two primary versions, preserving the product's own colours, type and components:
 
 - **Fly**: a 3D camera dollies, orbits and cranes through floating UI. Use for cinematic stories
-  about scale and systems. This is the selected default for the current Midnight prototype.
+  about scale and systems. Fly is the default.
 - **Midnight**: the original screen-based product walkthrough, with a camera dive, fly-tos,
   approval, guardrails and audit. Use for a detailed demonstration of a workflow.
 
 Honour an explicit choice. Otherwise infer the fit from the brief and state your choice; ask
-only if the distinction materially affects an unclear request. Call the original **Midnight**,
-not Console. Zoom remains a liked alternative for repeated dives into individual records;
-Snap is an optional experiment. Do not combine directions unless requested.
+only if the distinction materially affects an unclear request. Zoom (repeated dives into
+individual records) and Snap (one move per scroll flick) are optional alternatives. Do not combine directions unless requested.
 Read `references/builds.md` for the chosen source and `references/directions.md` for motion details.
 
 ### 3. Storyboard before you build
@@ -95,20 +104,19 @@ the user before building when they're around; it's the cheapest point to change 
 
 ### 4. Scaffold from the chosen build
 
-Copy from `SKILL_DIR` into `TARGET`; run every install, dev and build command in `TARGET`.
+Copy the chosen build from `SKILL_DIR` into the story folder in `STORY_REPO` (skip `node_modules`,
+`dist`, `.git`, logs and `*.tsbuildinfo`), set its `package.json` name, and run every install,
+dev and build command in that story folder.
 For **Fly**, start from `assets/fly/` as described in `references/builds.md`; its 3D
 world and orbit camera are not in the generic starter. For the full **Midnight** version,
 start from `assets/midnight/`. Keep the chosen engine, then adapt the product and chapters.
 
 For a minimal **Midnight-style** story instead of the full reference, copy `assets/starter/`
-into the story folder in `TARGET` (skip `node_modules`/`dist`), then `npm install` and start
-it using the project's dev command.
+into the story folder instead.
 
-Use the target project's existing package scripts, environment and dev-server configuration
-for the host and port. Reuse its running server when available. When adapting a reference,
-keep the target's server configuration rather than copying the reference's port. For a new
-standalone project, let the framework select its default available port. Read the actual URL
-from the server output and use that URL for previews and verification; do not assume a port.
+Each story is a standalone Vite app with its own `package.json`: `npm install`, then
+`npm run dev`. Let Vite select its default available port. Read the actual URL from the server
+output and use that URL for previews and verification; do not assume a port.
 
 **Don't get stuck on the server.** Many users run on remote machines (devpods, Codespaces,
 SSH) where only some ports are exposed:
@@ -137,8 +145,8 @@ The starter is a working mini story with the whole engine already in it:
 | `src/story/timeline/chapters.ts` | An example: camera dive → ticket → collapse into a unit chart → quiet ending |
 
 Replace the example's tokens (`styles/tokens.css`) with the product's, its copy
-(`story/data.ts`), its scenes and its chapters. If the project already has a stack, port the
-engine files into it instead; they depend only on React, GSAP and `@gsap/react`.
+(`story/data.ts`), its scenes and its chapters. The story stays React + Vite whatever the
+product is built with; the engine depends only on React, GSAP and `@gsap/react`.
 
 ### 5. Build scenes in their END state
 
@@ -162,7 +170,7 @@ its traps. Motion values come from `references/motion.md`.
 ### 7. Optional: a guide character
 
 A small mascot who hops between perches, reacts in speech bubbles and changes mood with the
-story makes it memorable, but only use one the project already has. Look through the target
+story makes it memorable, but only use one the project already has. Look through the product
 repo and workspace for an avatar, mascot or character folder or package. If you find a
 suitable character, `references/guide-character.md` has the recipe; if you don't, skip this
 step and say so. Don't invent a character or add an avatar library unless asked.
@@ -177,9 +185,10 @@ step and say so. Don't invent a character or add an avatar library unless asked.
   Playwright's Chromium; if it can't be installed or launched (no internet, missing system
   libraries), skip them after one failed attempt, run `npm run build`, and ask the user to
   scroll through the story themselves.
-- Before handing off, check that nothing was written into `SKILL_DIR`:
-  `git -C "$SKILL_DIR" status --short -- .` should list no files you created or changed.
-- Write a README in the story folder in `TARGET` (chapters table, file map, how to change copy and pacing). For a team, offer
+- Before handing off, check that you changed nothing outside the story folder:
+  `git -C "$PRODUCT" status --short` and `git -C "$SKILL_DIR" status --short -- .` should list
+  no files you created or changed.
+- Write a README in the story folder (chapters table, file map, how to change copy and pacing). For a team, offer
   a plain-language explainer of the story architecture.
 
 ## The rules that keep it working
