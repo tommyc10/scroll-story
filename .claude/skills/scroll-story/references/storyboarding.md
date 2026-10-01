@@ -84,10 +84,27 @@ and optionally an aside. Rules of thumb from Midnight:
 
 ## 7. Mining the product
 
-Read the product's code in the product repo (read-only; not the skill's reference builds):
+Read the product's code in the product repo (read-only; not the skill's reference builds).
+
+**First, how it works:**
+- **Purpose**: README, docs, any product or marketing copy. Who is it for, and what problem
+  does it solve?
+- **Flows**: pages, routes and navigation. What can a user do, and in what order? Trace the
+  main flow from its first screen to its result.
+- **Model**: types, schemas, database models. What are the core objects and how do they
+  relate? These are your protagonist candidates.
+- **Rules**: statuses, state machines, validations, permissions, business logic in services
+  and API handlers. These are the story's turning points (what makes something "approved",
+  what's blocked, what needs a person).
+- **Evidence**: tests, fixtures and seed data show real cases and edge cases, often better
+  than the UI does.
+
+**Then, how it looks and talks:**
 - **Tokens**: copy its theme variables into `styles/tokens.css`. Match its easing tokens.
 - **Components**: rebuild the key ones at stage size (a card, a badge, the main detail page).
   Don't import the real components; they bring layout and state you don't want. Copy the
   CSS values so it looks identical.
-- **Data**: use its mock data's names, IDs and numbers. In-jokes in the data (Midnight's Star
-  Wars world) are gold for a story.
+- **Data**: use its mock data, fixtures or seed data: names, IDs and numbers. In-jokes in the
+  data (Midnight's Star Wars world) are gold for a story. If there's none, write realistic
+  examples that fit its types and rules. Never copy real customer data, personal details or
+  secrets from the repo, and mark any numbers you invent so the user can confirm or replace them.

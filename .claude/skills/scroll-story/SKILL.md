@@ -75,11 +75,22 @@ mostly craft on a proven base.
 
 ### 1. Understand the product and mine the product repo
 
-Find out what the product does and which flow to tell. Read the product's code in `PRODUCT`
-first (not this skill's reference builds, which are a different product): its theme/tokens file, its key components (cards, badges, buttons, tables), its
-mock data and its domain language. The story should reuse these, not reinvent them. If it's
-unclear who the story is for or which flow matters, ask one short question. Otherwise pick the
-flow that best shows the product's value and say so.
+Read the product's code in `PRODUCT` (not this skill's reference builds, which are a
+different product). Do this in two passes; `references/storyboarding.md` §7 has the checklist.
+
+1. **How it works.** Understand the product before you think about visuals: its README and
+   docs, its pages and routes (what a user can do, in what order), its domain models and
+   types, its statuses and state changes (what turns a "proposed" into an "approved"), the
+   API or services behind the UI, and its tests, fixtures and seed data. Write down, for
+   yourself, what problem it solves, for whom, and the main flows step by step.
+2. **How it looks and talks.** Its theme/tokens, its key components (cards, badges, buttons,
+   tables), its domain language, and the most concrete data you can find.
+
+The story must follow a flow the product really supports, in the order it really happens,
+with the states and rules it really has. Reuse the product's look and words; don't invent
+features or steps. If it's unclear who the story is for or which flow matters, ask one short
+question. Otherwise pick the flow that best shows the product's value and say why, citing the
+files that show it.
 
 ### 2. Pick a direction
 
