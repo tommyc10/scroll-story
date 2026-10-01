@@ -1,6 +1,6 @@
 ---
 name: scroll-story
-description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating product UI) or Midnight (the original screen-based walkthrough), with working reference builds, a starter, transition recipes, and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and scrollytelling; works with Claude Code and Codex. The skill lives in its own repo: it reads the product from a separate, read-only repo in the workspace and builds each story as a standalone app in the skill repo's stories/ folder.
+description: Build scroll-driven product stories in React with GSAP ScrollTrigger. Choose Fly (a 3D camera through floating product UI) or Midnight (the original screen-based walkthrough), with working reference builds, a starter, transition recipes, and verification scripts. Use for cinematic product demos, launch pages, scroll-animated workflows, and scrollytelling; works with Claude Code and Codex. It reads the product from a read-only repo in the workspace and builds each story as a standalone app in the stories repo the user chooses.
 ---
 
 # Scroll story
@@ -15,38 +15,52 @@ The two primary reference builds are **Fly** (`assets/fly/`, default direction) 
 Use the same skill in Claude Code or Codex. Read `references/builds.md` to locate the source
 and scaffold the chosen version; `references/midnight-case-study.md` documents the original.
 
-## Two repos: the story repo and the product repo
+## Three places: the skill, the product repo and the story repo
 
-This skill lives in its own repo (for example `km-stories`), opened in VS Code alongside the
-product's repo. The product repo is **read-only**; every story is built in the skill's repo.
+Keep these apart. They are often three different locations, and the skill can be installed
+anywhere (`.claude/skills/`, `.agents/skills/`, `.github/skills/`, or globally).
 
 - **Skill directory** (`SKILL_DIR`): the folder containing this `SKILL.md`. Every `assets/`,
-  `references/` and `scripts/` path in this skill is relative to it. Never edit it.
-- **Story repo** (`STORY_REPO`): the git repo that contains `SKILL_DIR`
-  (`git -C "$SKILL_DIR" rev-parse --show-toplevel`). Each story is a standalone app in its own
-  folder, `STORY_REPO/stories/<product-name>/`. All copying, installing, running and building
-  happens there.
+  `references/` and `scripts/` path in this skill is relative to it. Never edit it, and never
+  build a story inside it.
 - **Product repo** (`PRODUCT`): the product the story is about. Read its code to learn the
-  product: tokens, components, mock data, domain language. **Never write, install or run
-  anything in it.**
+  product. It is **read-only**: never write, install or run anything in it.
+- **Story repo** (`STORY_REPO`): where the user wants stories saved. Each story is a
+  standalone app in its own folder, `STORY_REPO/stories/<product-name>/`. All copying,
+  installing, running and building happens there.
 
-Resolve `PRODUCT` before step 1, in this order:
+Resolve both repos before step 1. The user's own words always win.
 
-1. A path or repo the user names in the request (`/scroll-story ... for ../acme-web`).
-2. The other folders open in the session: VS Code workspace roots, directories added with
-   `/add-dir` or `--add-dir`, or the working directory, excluding `STORY_REPO`. If exactly one
+**`PRODUCT`**, in this order:
+
+1. A path or repo the user names as the product (`... for ../acme-web`).
+2. The folders open in the session (VS Code workspace roots, directories added with
+   `/add-dir` or `--add-dir`, the working directory), excluding `STORY_REPO`. If exactly one
    candidate remains, use it.
-3. Otherwise, ask the user for the path. Don't guess.
+3. Otherwise ask. Don't guess.
 
-Then confirm in one line: "Product: `../acme-web` (read-only). Story: `km-stories/stories/acme-web/`."
-Name the folder after the product (add the flow, `acme-web-onboarding`, if the product already
-has a story). If that folder already exists, ask whether to update it or start a new one.
+**`STORY_REPO`**, in this order:
 
-If `SKILL_DIR` isn't inside a repo of its own (for example, installed globally in
-`~/.claude/skills/`), or `STORY_REPO` turns out to be the product repo, ask the user where the
-stories folder should go instead of writing into the product. If you can't read `PRODUCT`
-(sandbox or permissions), ask the user to add it (`/add-dir <path>` in Claude Code,
-`--add-dir <path>` in Codex).
+1. A path or repo the user names as the destination (`... save it in ../km-stories`,
+   `... put the story in ../demos/acme`). If they name an exact folder, build there and don't
+   add `stories/<product-name>/`.
+2. A folder open in the session that is clearly meant for stories: it already has a
+   `stories/` folder from this skill, or it is the repo that contains `SKILL_DIR` and is not
+   the product. If exactly one such folder exists, use it.
+3. Otherwise ask: "Which repo should the story be saved in?", listing the open folders.
+   Don't guess, and never default to the product repo.
+
+Only build inside the product repo if the user explicitly names it as the destination. Then
+add the new story folder and change nothing else there.
+
+Confirm both in one line before starting: "Product: `../acme-web` (read-only). Story:
+`../km-stories/stories/acme-web/`." Name the folder after the product (add the flow,
+`acme-web-onboarding`, if the product already has a story). If that folder already exists,
+ask whether to update it or start a new one.
+
+If you can't read `PRODUCT` or write to `STORY_REPO` (sandbox or permissions), ask the user
+to add it (`/add-dir <path>` in Claude Code, `--add-dir <path>` in Codex) rather than writing
+somewhere else.
 
 Because the story lives in a different repo, it can't import the product's code. Rebuild the
 components it needs at stage size and copy token values, fonts (via their npm packages, such

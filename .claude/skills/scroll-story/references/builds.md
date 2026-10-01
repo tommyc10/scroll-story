@@ -3,7 +3,7 @@
 Both agents use the sources bundled with this skill. All `assets/` paths below are relative
 to the directory containing `SKILL.md`, regardless of the current working directory.
 No separate checkout or reference repository is required. Copy *from* the skill directory
-*into* the story folder, `stories/<product-name>/` in the skill's repo (see "Two repos" in
+*into* the story folder, `stories/<product-name>/` in the story repo (see "Three places" in
 `SKILL.md`). Never install, build or run inside the skill directory or the product repo.
 
 | Version | Source | Preview | Choose it for |

@@ -21,16 +21,17 @@ $scroll-story use Fly for our onboarding flow
 $scroll-story use Midnight for our approval flow
 ```
 
-Point it at the product repo, which is open alongside this one in the workspace:
+Say which repo is the product and which repo the story should be saved in:
 
 ```text
-/scroll-story use Fly for the checkout flow in ../acme-web
+/scroll-story use Fly for the checkout flow in ../acme-web, save the story in ../km-stories
 ```
 
-The product repo is read-only: the agent reads its styles, components, mock data and
-wording, and changes nothing there. The story is built as a standalone app in this repo, in
-`stories/<product-name>/`. If you don't name the product, the agent uses the one other folder
-open in the session (VS Code workspace root, `/add-dir`, `--add-dir`), or asks.
+The product repo is read-only: the agent reads how it works, its styles, components and
+wording, and changes nothing there. The story is built as a standalone app in the repo you
+name, in `stories/<product-name>/`. If you don't name one, the agent uses a folder in the
+workspace that is clearly for stories (it already has a `stories/` folder, or it's the repo
+that holds this skill), or asks. It never defaults to the product repo.
 
 Both agents can also select the skill for a relevant product-story request. The skill routes
 from the chosen version to its working source, then covers storyboarding, adaptation and
@@ -38,15 +39,19 @@ verification. Zoom remains an optional alternative when specifically wanted.
 
 ## Install
 
-- **As its own repo (recommended)**: clone the scroll-story repository (rename it if you like,
-  e.g. `km-stories`). The skill lives at `.claude/skills/scroll-story/` (Claude Code) and
-  `.agents/skills/scroll-story` is a relative symlink to it (Codex). Open the clone in VS Code,
-  add your product repo to the workspace (File → Add Folder to Workspace), start the agent in
-  the clone, and give it read access to the product: `/add-dir ../product` in Claude Code,
-  `codex --add-dir ../product` in Codex. Stories appear in the clone's `stories/` folder.
+The skill works from anywhere; where it's installed doesn't decide where stories go.
+
+- **In a stories repo**: clone the scroll-story repository (rename it if you like, e.g.
+  `km-stories`). The skill lives at `.claude/skills/scroll-story/` (Claude Code) and
+  `.agents/skills/scroll-story` is a relative symlink to it (Codex). Stories go in its
+  `stories/` folder by default.
+- **In another skills folder**: copy this folder to wherever your agent reads skills, such as
+  `.github/skills/scroll-story`, and name the stories repo in your request.
 - **Globally**: copy this folder to `~/.claude/skills/scroll-story` and link
-  `~/.codex/skills/scroll-story` to it. With no repo of its own, the agent asks where to put
-  each story.
+  `~/.codex/skills/scroll-story` to it. Name the stories repo in your request.
+
+Open the product repo and the stories repo in the same VS Code workspace, and give the agent
+access to both if needed: `/add-dir <path>` in Claude Code, `codex --add-dir <path>` in Codex.
 
 The full Fly and Midnight reference applications are bundled in `assets/fly/` and
 `assets/midnight/`. Copying this skill folder includes everything needed except installed

@@ -15,10 +15,18 @@ frames, rewind, reload flashes and the reduced-motion fallback.
 
 ## How it works
 
-Open this repo in VS Code with your product's repo alongside it in the same workspace. The
-agent reads your product's code (tokens, components, mock data, domain language) from the
-product repo, **without changing anything there**, and builds the story as a standalone app in
-this repo, in `stories/<product-name>/`.
+Three places, usually open together in one VS Code workspace:
+
+- **The skill**: this folder of instructions and reference builds. It can live in this repo,
+  in another skills folder such as `.github/skills/`, or be installed globally.
+- **Your product repo**: the agent reads how the product works, its styles, components and
+  wording. It **changes nothing there**.
+- **Your stories repo**: where you want stories saved. Each story is built as a standalone
+  app in `stories/<product-name>/`.
+
+You can name both repos in your request. If you don't name a stories repo, the agent uses a
+workspace folder that is clearly for stories (such as a clone of this repo), or asks. It
+never defaults to the product repo.
 
 ## Quick start
 
@@ -27,26 +35,25 @@ git clone <this-repo-url> km-stories
 code km-stories                        # then File → Add Folder to Workspace → your product repo
 ```
 
-Start your agent in `km-stories`, give it read access to your product, and ask for a story:
+Start your agent, give it access to both repos, and ask for a story:
 
 ```text
 # Claude Code
 /add-dir ../my-product
-/scroll-story use Fly for our onboarding flow in ../my-product
+/scroll-story use Fly for our onboarding flow in ../my-product, save the story in ../km-stories
 
 # Codex (start with: codex --add-dir ../my-product)
-$scroll-story use Midnight for the approval flow in ../my-product
+$scroll-story use Midnight for the approval flow in ../my-product, save it in ../km-stories
 ```
 
 The story appears in `km-stories/stories/my-product/`. Run it with `npm install && npm run dev`
-in that folder. If you don't name a product, the agent uses the one other folder open in the
-session, or asks.
+in that folder.
 
-## Install globally
+## Install the skill elsewhere
 
-Copy `.claude/skills/scroll-story` to `~/.claude/skills/scroll-story` and link
-`~/.codex/skills/scroll-story` to it. Without a repo of its own, the agent asks where each
-story should go.
+Copy `.claude/skills/scroll-story` to wherever your agent reads skills (for example
+`.github/skills/scroll-story`, or `~/.claude/skills/scroll-story` for every project). Then
+name the stories repo in your request, since the skill no longer sits in one.
 
 ## Layout
 
